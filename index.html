@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -51,7 +52,7 @@
             padding: 24px;
         }
 
-        /* 주소 뒤에 해당 해시가 붙었을 때만 표시 */
+        /* 주소 뒤에 해당 해시가 붙었을 때 표시 */
         #work-page:target,
         #statement-page:target,
         #cv-page:target {
@@ -277,21 +278,15 @@
             ball.className = "cursor-ball";
 
             if (i === 0) {
-                /*
-                 * 첫 번째 공:
-                 * 하얀색 + 검정 테두리
-                 */
+                /* 첫 번째 공: 흰색 + 얇은 검정 테두리 */
                 ball.style.backgroundColor = "#ffffff";
-                ball.style.border = "2px solid #000000";
+                ball.style.border = "1px solid #000000";
                 ball.style.width = "20px";
                 ball.style.height = "20px";
                 ball.style.zIndex = "10000";
                 ball.style.display = "block";
             } else {
-                /*
-                 * 뒤따라오는 공:
-                 * 처음에는 보이지 않음
-                 */
+                /* 뒤따라오는 공: 처음에는 숨김 */
                 ball.style.backgroundColor =
                     colors[Math.floor(Math.random() * colors.length)];
 
@@ -311,16 +306,14 @@
             });
         }
 
-        /* 마우스 움직임 감지 */
+        /* 마우스 위치 추적 */
         document.addEventListener("mousemove", function(event) {
             mouseX = event.clientX;
             mouseY = event.clientY;
 
             isMoving = true;
 
-            /*
-             * 첫 번째 공을 제외한 나머지 공 표시
-             */
+            /* 뒤따라오는 공 표시 */
             balls.forEach(function(ball, index) {
                 if (index > 0) {
                     ball.element.style.display = "block";
@@ -328,20 +321,41 @@
             });
 
             /*
-             * 마우스를 멈추면 뒤따라오는 공 숨기기
+             * 마우스를 멈추면 바로 사라지지 않고,
+             * 모든 공이 충분히 따라올 때까지 기다림
              */
             clearTimeout(moveTimer);
 
             moveTimer = setTimeout(function() {
                 isMoving = false;
 
+                waitUntilBallsArrive();
+
+            }, 180);
+        });
+
+        /*
+         * 마지막 공까지 앞 공의 위치에 도착한 뒤
+         * 뒤따라오는 공들을 숨김
+         */
+        function waitUntilBallsArrive() {
+            const lastBall = balls[balls.length - 1];
+
+            const distance = Math.hypot(
+                lastBall.x - mouseX,
+                lastBall.y - mouseY
+            );
+
+            if (distance < 1) {
                 balls.forEach(function(ball, index) {
                     if (index > 0) {
                         ball.element.style.display = "none";
                     }
                 });
-            }, 180);
-        });
+            } else {
+                setTimeout(waitUntilBallsArrive, 30);
+            }
+        }
 
         /* 공들이 차례대로 따라오게 만들기 */
         function animate() {
@@ -367,9 +381,7 @@
                         colors[ball.colorIndex];
                 }
 
-                /*
-                 * 현재 공의 위치를 다음 공이 따라감
-                 */
+                /* 다음 공은 현재 공을 따라감 */
                 targetX = ball.x;
                 targetY = ball.y;
             });
