@@ -7,26 +7,161 @@
     <title>parkseoyeon</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #d4d4d4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            color: #111;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        h1 a {
+            color: #111;
+            text-decoration: none;
+        }
+
+        .work-button {
+            font-size: 16px;
+            color: #111;
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            margin-top: 8px;
+            font-size: 16px;
+            color: #111;
+            text-decoration: none;
+        }
+
+        .back:hover,
+        .work-button:hover {
+            opacity: 0.5;
+        }
+
+        main {
+            margin-top: 100px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: normal;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* 작품 리스트 화면 */
+        #work-page {
+            display: none;
+        }
+
+        #work-page:target {
+            display: block;
+        }
+
+        #work-page:target ~ #home-page {
+            display: none;
+        }
+
+        .work-list {
+            margin-top: 50px;
+        }
+
+        .work-item {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .work-item a {
+            color: #111;
+            text-decoration: none;
+        }
+
+        .work-item a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>parkseoyeon</h1>
-        <div>Artist</div>
-    </header>
+    <!-- 작품 리스트 화면 -->
+    <section id="work-page">
 
-    <main>
-        <h2>Park Seoyeon</h2>
+        <header>
+            <div>
+                <h1>
+                    <a href="index.html">parkseoyeon</a>
+                </h1>
 
-        <p>
-            Objects, relationships, identity and the things that remain.
-        </p>
-    </main>
+                <a class="back" href="index.html">←</a>
+            </div>
+
+            <div>Work</div>
+        </header>
+
+        <div class="work-list">
+
+            <div class="work-item">
+                <a href="#">Work 01</a>
+            </div>
+
+            <div class="work-item">
+                <a href="#">Work 02</a>
+            </div>
+
+            <div class="work-item">
+                <a href="#">Work 03</a>
+            </div>
+
+            <div class="work-item">
+                <a href="#">Work 04</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 첫 화면 -->
+    <section id="home-page">
+
+        <header>
+            <h1>parkseoyeon</h1>
+
+            <a class="work-button" href="#work-page">
+                work
+            </a>
+        </header>
+
+        <main>
+            <h2>Park Seoyeon</h2>
+
+            <p>
+                Objects, relationships, identity and the things that remain.
+            </p>
+        </main>
+
+    </section>
 
 </body>
 </html>
