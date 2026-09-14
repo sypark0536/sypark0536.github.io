@@ -18,7 +18,6 @@
             margin: 0;
             padding: 8px;
             color: #111;
-            text-transform: none;
         }
 
         header {
@@ -31,22 +30,34 @@
             font-size: 24px;
             font-weight: normal;
             margin: 0;
-            text-transform: none;
         }
 
         h1 a {
             color: #111;
             text-decoration: none;
-            text-transform: none;
         }
 
-        .work-button {
+        /* 메인 페이지 목차 */
+
+        .menu {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .menu a {
             font-size: 16px;
             color: #111;
-            text-decoration: underline;
-            cursor: pointer;
-            text-transform: none;
+            text-decoration: none;
         }
+
+        .menu a:hover {
+            opacity: 0.5;
+        }
+
+        /* 뒤로 가기 화살표 */
 
         .back {
             display: block;
@@ -54,27 +65,33 @@
             font-size: 16px;
             color: #111;
             text-decoration: none;
-            text-transform: none;
         }
 
-        .back:hover,
-        .work-button:hover {
+        .back:hover {
             opacity: 0.5;
         }
 
-        /* 작품 리스트 화면 */
+        /* 페이지 전환 */
 
-        #work-page {
+        #work-page,
+        #statement-page,
+        #cv-page {
             display: none;
         }
 
-        #work-page:target {
+        #work-page:target,
+        #statement-page:target,
+        #cv-page:target {
             display: block;
         }
 
-        #work-page:target ~ #home-page {
+        #work-page:target ~ #home-page,
+        #statement-page:target ~ #home-page,
+        #cv-page:target ~ #home-page {
             display: none;
         }
+
+        /* 작품 리스트 */
 
         .work-list {
             margin-top: 50px;
@@ -93,6 +110,14 @@
         .work-item a:hover {
             text-decoration: underline;
         }
+
+        /* Artist statement와 CV 화면 */
+
+        .page-content {
+            margin-top: 50px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 
@@ -110,7 +135,7 @@
                 <a class="back" href="index.html">←</a>
             </div>
 
-            <div>work</div>
+            <div>Work</div>
         </header>
 
         <div class="work-list">
@@ -140,16 +165,66 @@
     </section>
 
 
-    <!-- 첫 화면 -->
+    <!-- Artist statement 화면 -->
+    <section id="statement-page">
+
+        <header>
+            <div>
+                <h1>
+                    <a href="index.html">Parkseoyeon</a>
+                </h1>
+
+                <a class="back" href="index.html">←</a>
+            </div>
+
+            <div>Artist statement</div>
+        </header>
+
+        <div class="page-content">
+            Artist statement
+        </div>
+
+    </section>
+
+
+    <!-- CV 화면 -->
+    <section id="cv-page">
+
+        <header>
+            <div>
+                <h1>
+                    <a href="index.html">Parkseoyeon</a>
+                </h1>
+
+                <a class="back" href="index.html">←</a>
+            </div>
+
+            <div>CV</div>
+        </header>
+
+        <div class="page-content">
+            CV
+        </div>
+
+    </section>
+
+
+    <!-- 메인 페이지 -->
     <section id="home-page">
 
         <header>
             <h1>Parkseoyeon</h1>
-
-            <a class="work-button" href="#work-page">
-                work
-            </a>
         </header>
+
+        <nav class="menu">
+
+            <a href="#statement-page">Artist statement</a>
+
+            <a href="#cv-page">CV</a>
+
+            <a href="#work-page">Work</a>
+
+        </nav>
 
     </section>
 
