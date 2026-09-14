@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,221 +11,243 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
+            margin: 0;
             background-color: #d4d4d4;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 8px;
-            color: #111;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        h1 {
-            font-size: 24px;
+            color: #000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
             font-weight: normal;
-            margin: 0;
+            text-transform: none;
         }
 
-        h1 a {
-            color: #111;
+        a {
+            color: #000;
             text-decoration: none;
+            text-transform: none;
         }
 
-        /* 메인 페이지 목차 */
-
-        .menu {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
+        a:hover {
+            text-decoration: underline;
         }
 
-        .menu a {
-            font-size: 16px;
-            color: #111;
-            text-decoration: none;
-        }
-
-        .menu a:hover {
-            opacity: 0.5;
-        }
-
-        /* 뒤로 가기 화살표 */
-
-        .back {
+        /* 기본 화면 */
+        #home-page {
             display: block;
-            margin-top: 8px;
-            font-size: 16px;
-            color: #111;
-            text-decoration: none;
+            min-height: 100vh;
+            padding: 24px;
         }
 
-        .back:hover {
-            opacity: 0.5;
-        }
-
-        /* 페이지 전환 */
-
+        /* 내부 페이지 기본 숨김 */
         #work-page,
         #statement-page,
         #cv-page {
             display: none;
+            min-height: 100vh;
+            padding: 24px;
         }
 
+        /* 주소 뒤에 해당 해시가 붙었을 때만 표시 */
         #work-page:target,
         #statement-page:target,
         #cv-page:target {
             display: block;
         }
 
+        /* 내부 페이지가 열리면 메인 화면 숨김 */
         #work-page:target ~ #home-page,
         #statement-page:target ~ #home-page,
         #cv-page:target ~ #home-page {
             display: none;
         }
 
-        /* 작품 리스트 */
-
-        .work-list {
-            margin-top: 50px;
+        /* 공통 헤더 */
+        .site-name {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-size: 16px;
         }
 
-        .work-item {
-            margin-bottom: 20px;
-            font-size: 20px;
+        .page-title {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 16px;
         }
 
-        .work-item a {
-            color: #111;
-            text-decoration: none;
+        /* 메인 목차 */
+        .menu {
+            position: absolute;
+            top: 90px;
+            left: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .work-item a:hover {
-            text-decoration: underline;
+        .menu a {
+            display: block;
+            width: fit-content;
         }
 
-        /* Artist statement와 CV 화면 */
+        /* 내부 페이지 내용 */
+        .back {
+            position: absolute;
+            top: 52px;
+            left: 24px;
+            font-size: 16px;
+        }
 
         .page-content {
-            margin-top: 50px;
-            font-size: 16px;
+            padding-top: 130px;
+            max-width: 700px;
             line-height: 1.5;
+        }
+
+        /* 작품 목록 */
+        .work-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* 핑크색 커서 */
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            display: none;
+        }
+
+        /* 마우스를 사용하는 화면에서만 커스텀 커서 적용 */
+        @media (hover: hover) and (pointer: fine) {
+            body,
+            a {
+                cursor: none;
+            }
+
+            .custom-cursor {
+                display: block;
+            }
+        }
+
+        /* 모바일 화면 */
+        @media (max-width: 600px) {
+            #home-page,
+            #work-page,
+            #statement-page,
+            #cv-page {
+                padding: 20px;
+            }
+
+            .site-name {
+                top: 20px;
+                left: 20px;
+            }
+
+            .page-title {
+                top: 20px;
+                right: 20px;
+            }
+
+            .menu {
+                top: 80px;
+                left: 20px;
+            }
+
+            .back {
+                top: 48px;
+                left: 20px;
+            }
+
+            .page-content {
+                padding-top: 120px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- 작품 리스트 화면 -->
+    <!-- 핑크색 커서 -->
+    <div class="custom-cursor"></div>
+
+    <!-- 작품 페이지 -->
     <section id="work-page">
+        <div class="site-name">Parkseoyeon</div>
 
-        <header>
-            <div>
-                <h1>
-                    <a href="index.html">Parkseoyeon</a>
-                </h1>
+        <a class="back" href="index.html">←</a>
 
-                <a class="back" href="index.html">←</a>
-            </div>
+        <div class="page-title">Work</div>
 
-            <div>Work</div>
-        </header>
-
-        <div class="work-list">
-
-            <div class="work-item">
+        <div class="page-content">
+            <div class="work-list">
                 <a href="#">Everything is life 2023</a>
-            </div>
-
-            <div class="work-item">
                 <a href="#">Inner place 2024</a>
-            </div>
-
-            <div class="work-item">
                 <a href="#">Inner place (un - labeled) 2024</a>
-            </div>
-
-            <div class="work-item">
                 <a href="#">돌 봄 2025</a>
-            </div>
-
-            <div class="work-item">
                 <a href="#">이렇게 밥상에 모였다. 2026</a>
             </div>
-
         </div>
-
     </section>
 
-
-    <!-- Artist statement 화면 -->
+    <!-- Artist statement 페이지 -->
     <section id="statement-page">
+        <div class="site-name">Parkseoyeon</div>
 
-        <header>
-            <div>
-                <h1>
-                    <a href="index.html">Parkseoyeon</a>
-                </h1>
+        <a class="back" href="index.html">←</a>
 
-                <a class="back" href="index.html">←</a>
-            </div>
-
-            <div>Artist statement</div>
-        </header>
+        <div class="page-title">Artist statement</div>
 
         <div class="page-content">
             Artist statement
         </div>
-
     </section>
 
-
-    <!-- CV 화면 -->
+    <!-- CV 페이지 -->
     <section id="cv-page">
+        <div class="site-name">Parkseoyeon</div>
 
-        <header>
-            <div>
-                <h1>
-                    <a href="index.html">Parkseoyeon</a>
-                </h1>
+        <a class="back" href="index.html">←</a>
 
-                <a class="back" href="index.html">←</a>
-            </div>
-
-            <div>CV</div>
-        </header>
+        <div class="page-title">CV</div>
 
         <div class="page-content">
             CV
         </div>
-
     </section>
-
 
     <!-- 메인 페이지 -->
     <section id="home-page">
-
-        <header>
-            <h1>Parkseoyeon</h1>
-        </header>
+        <div class="site-name">Parkseoyeon</div>
 
         <nav class="menu">
-
             <a href="#statement-page">Artist statement</a>
-
             <a href="#cv-page">CV</a>
-
             <a href="#work-page">Work</a>
-
         </nav>
-
     </section>
+
+    <script>
+        const cursor = document.querySelector(".custom-cursor");
+
+        document.addEventListener("mousemove", function(event) {
+            cursor.style.left = event.clientX + "px";
+            cursor.style.top = event.clientY + "px";
+        });
+    </script>
 
 </body>
 </html>
