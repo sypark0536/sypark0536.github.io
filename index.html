@@ -1,253 +1,129 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+    const trail = document.getElementById("cursor-trail");
 
-    <title>Parkseoyeon</title>
+    const balls = [];
+    const ballCount = 14;
 
-    <style>
-        * {
-            box-sizing: border-box;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let lastMouseX = mouseX;
+    let lastMouseY = mouseY;
+    let isMoving = false;
+    let moveTimer;
+
+    const colors = [
+        "#ff69b4",
+        "#ff1493",
+        "#ff8fab",
+        "#ffb3c6",
+        "#c77dff",
+        "#9d4edd",
+        "#7b2cbf",
+        "#00b4d8",
+        "#48cae4",
+        "#90be6d",
+        "#f9c74f",
+        "#f9844a",
+        "#f94144"
+    ];
+
+    /* 공 생성 */
+    for (let i = 0; i < ballCount; i++) {
+        const ball = document.createElement("div");
+
+        ball.className = "cursor-ball";
+
+        if (i === 0) {
+            /* 첫 번째 공: 흰색 + 검정 테두리 */
+            ball.style.backgroundColor = "#ffffff";
+            ball.style.border = "2px solid #000000";
+            ball.style.width = "20px";
+            ball.style.height = "20px";
+            ball.style.zIndex = "10000";
+            ball.style.display = "block";
+        } else {
+            /* 뒤따라오는 공: 처음에는 숨김 */
+            ball.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+
+            ball.style.width = (12 + Math.random() * 10) + "px";
+            ball.style.height = ball.style.width;
+            ball.style.display = "none";
+            ball.style.zIndex = "9999";
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        trail.appendChild(ball);
 
-        body {
-            margin: 0;
-            background-color: #d4d4d4;
-            color: #000;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: normal;
-            text-transform: none;
-        }
-
-        a {
-            color: #000;
-            text-decoration: none;
-            text-transform: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* 기본 화면 */
-        #home-page {
-            display: block;
-            min-height: 100vh;
-            padding: 24px;
-        }
-
-        /* 내부 페이지 기본 숨김 */
-        #work-page,
-        #statement-page,
-        #cv-page {
-            display: none;
-            min-height: 100vh;
-            padding: 24px;
-        }
-
-        /* 주소 뒤에 해당 해시가 붙었을 때만 표시 */
-        #work-page:target,
-        #statement-page:target,
-        #cv-page:target {
-            display: block;
-        }
-
-        /* 내부 페이지가 열리면 메인 화면 숨김 */
-        #work-page:target ~ #home-page,
-        #statement-page:target ~ #home-page,
-        #cv-page:target ~ #home-page {
-            display: none;
-        }
-
-        /* 공통 헤더 */
-        .site-name {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            font-size: 16px;
-        }
-
-        .page-title {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            font-size: 16px;
-        }
-
-        /* 메인 목차 */
-        .menu {
-            position: absolute;
-            top: 90px;
-            left: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .menu a {
-            display: block;
-            width: fit-content;
-        }
-
-        /* 내부 페이지 내용 */
-        .back {
-            position: absolute;
-            top: 52px;
-            left: 24px;
-            font-size: 16px;
-        }
-
-        .page-content {
-            padding-top: 130px;
-            max-width: 700px;
-            line-height: 1.5;
-        }
-
-        /* 작품 목록 */
-        .work-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* 핑크색 커서 */
-        .custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 18px;
-            height: 18px;
-            background-color: #ff9ccd;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            display: none;
-        }
-
-        /* 마우스를 사용하는 화면에서만 커스텀 커서 적용 */
-        @media (hover: hover) and (pointer: fine) {
-            body,
-            a {
-                cursor: none;
-            }
-
-            .custom-cursor {
-                display: block;
-            }
-        }
-
-        /* 모바일 화면 */
-        @media (max-width: 600px) {
-            #home-page,
-            #work-page,
-            #statement-page,
-            #cv-page {
-                padding: 20px;
-            }
-
-            .site-name {
-                top: 20px;
-                left: 20px;
-            }
-
-            .page-title {
-                top: 20px;
-                right: 20px;
-            }
-
-            .menu {
-                top: 80px;
-                left: 20px;
-            }
-
-            .back {
-                top: 48px;
-                left: 20px;
-            }
-
-            .page-content {
-                padding-top: 120px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- 핑크색 커서 -->
-    <div class="custom-cursor"></div>
-
-    <!-- 작품 페이지 -->
-    <section id="work-page">
-        <div class="site-name">Parkseoyeon</div>
-
-        <a class="back" href="index.html">←</a>
-
-        <div class="page-title">Work</div>
-
-        <div class="page-content">
-            <div class="work-list">
-                <a href="#">Everything is life 2023</a>
-                <a href="#">Inner place 2024</a>
-                <a href="#">Inner place (un - labeled) 2024</a>
-                <a href="#">돌 봄 2025</a>
-                <a href="#">이렇게 밥상에 모였다. 2026</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Artist statement 페이지 -->
-    <section id="statement-page">
-        <div class="site-name">Parkseoyeon</div>
-
-        <a class="back" href="index.html">←</a>
-
-        <div class="page-title">Artist statement</div>
-
-        <div class="page-content">
-            Artist statement
-        </div>
-    </section>
-
-    <!-- CV 페이지 -->
-    <section id="cv-page">
-        <div class="site-name">Parkseoyeon</div>
-
-        <a class="back" href="index.html">←</a>
-
-        <div class="page-title">CV</div>
-
-        <div class="page-content">
-            CV
-        </div>
-    </section>
-
-    <!-- 메인 페이지 -->
-    <section id="home-page">
-        <div class="site-name">Parkseoyeon</div>
-
-        <nav class="menu">
-            <a href="#statement-page">Artist statement</a>
-            <a href="#cv-page">CV</a>
-            <a href="#work-page">Work</a>
-        </nav>
-    </section>
-
-    <script>
-        const cursor = document.querySelector(".custom-cursor");
-
-        document.addEventListener("mousemove", function(event) {
-            cursor.style.left = event.clientX + "px";
-            cursor.style.top = event.clientY + "px";
+        balls.push({
+            element: ball,
+            x: mouseX,
+            y: mouseY,
+            colorIndex: Math.floor(Math.random() * colors.length)
         });
-    </script>
+    }
 
-</body>
-</html>
+    /* 마우스가 움직일 때 */
+    document.addEventListener("mousemove", function(event) {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+        isMoving = true;
+
+        /* 뒤따라오는 공 보이기 */
+        balls.forEach(function(ball, index) {
+            if (index > 0) {
+                ball.element.style.display = "block";
+            }
+        });
+
+        /* 마우스를 멈추면 다시 숨기기 */
+        clearTimeout(moveTimer);
+
+        moveTimer = setTimeout(function() {
+            isMoving = false;
+
+            balls.forEach(function(ball, index) {
+                if (index > 0) {
+                    ball.element.style.display = "none";
+                }
+            });
+        }, 180);
+    });
+
+    /* 공들이 순서대로 따라오기 */
+    function animate() {
+        let targetX = mouseX;
+        let targetY = mouseY;
+
+        balls.forEach(function(ball, index) {
+            ball.x += (targetX - ball.x) * 0.28;
+            ball.y += (targetY - ball.y) * 0.28;
+
+            ball.element.style.left = ball.x + "px";
+            ball.element.style.top = ball.y + "px";
+
+            /*
+             * 뒤따라오는 공들만 색상 변경
+             * 첫 번째 흰색 공은 항상 흰색 유지
+             */
+            if (index !== 0 && isMoving && Math.random() < 0.08) {
+                ball.colorIndex =
+                    Math.floor(Math.random() * colors.length);
+
+                ball.element.style.backgroundColor =
+                    colors[ball.colorIndex];
+            }
+
+            /*
+             * 현재 공의 위치를 다음 공이 따라감
+             */
+            targetX = ball.x;
+            targetY = ball.y;
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
