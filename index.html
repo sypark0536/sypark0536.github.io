@@ -44,18 +44,20 @@
         }
 
         /* 내부 페이지 기본 숨김 */
-        #work-page,
-        #statement-page,
-        #cv-page {
+      #work-page,
+#statement-page,
+#cv-page,
+#dolbom-page {
             display: none;
             min-height: 100vh;
             padding: 24px;
         }
 
         /* 주소 뒤에 해당 해시가 붙었을 때 표시 */
-        #work-page:target,
-        #statement-page:target,
-        #cv-page:target {
+#work-page:target,
+#statement-page:target,
+#cv-page:target,
+#dolbom-page:target {
             display: block;
         }
 
@@ -145,7 +147,17 @@
                 display: block;
             }
         }
+.work-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
 
+.work-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
         /* 모바일 화면 */
         @media (max-width: 600px) {
             #home-page,
@@ -200,12 +212,32 @@
                 <a href="#">Everything is life 2023</a>
                 <a href="#">Inner place 2024</a>
                 <a href="#">Inner place (un - labeled) 2024</a>
-                <a href="#">돌 봄 2025</a>
+                <a href="#dolbom-page">돌 봄 2025</a>
                 <a href="#">이렇게 밥상에 모였다. 2026</a>
             </div>
         </div>
     </section>
+<!-- 돌 봄 작품 페이지 -->
+<section id="dolbom-page">
+    <div class="site-name">Parkseoyeon</div>
 
+    <a class="back" href="#work-page">←</a>
+
+    <div class="page-title">돌 봄 2025</div>
+
+    <div class="page-content">
+        <div class="work-gallery">
+            <img src="DSC01300.JPG" alt="돌 봄 2025">
+            <img src="DSC01305.JPG" alt="돌 봄 2025">
+            <img src="DSC01312.JPG" alt="돌 봄 2025">
+            <img src="DSC01313.JPG" alt="돌 봄 2025">
+            <img src="DSC01432.JPG" alt="돌 봄 2025">
+            <img src="DSC01437.JPG" alt="돌 봄 2025">
+            <img src="DSC01438.JPG" alt="돌 봄 2025">
+            <img src="DSC01440.JPG" alt="돌 봄 2025">
+        </div>
+    </div>
+</section>
     <!-- Artist statement 페이지 -->
     <section id="statement-page">
         <div class="site-name">Parkseoyeon</div>
