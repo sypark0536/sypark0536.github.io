@@ -48,18 +48,20 @@
         #statement-page,
         #cv-page,
         #dolbom-page,
-        #innerplace-page {
+        #innerplace-page,
+        #bapsang-page {
             display: none;
             min-height: 100vh;
             padding: 24px;
         }
 
-        /* 주소 뒤에 해당 해시가 붙었을 때 표시 */
+        /* 페이지 표시 */
         #work-page:target,
         #statement-page:target,
         #cv-page:target,
         #dolbom-page:target,
-        #innerplace-page:target {
+        #innerplace-page:target,
+        #bapsang-page:target {
             display: block;
         }
 
@@ -68,7 +70,8 @@
         #statement-page:target ~ #home-page,
         #cv-page:target ~ #home-page,
         #dolbom-page:target ~ #home-page,
-        #innerplace-page:target ~ #home-page {
+        #innerplace-page:target ~ #home-page,
+        #bapsang-page:target ~ #home-page {
             display: none;
         }
 
@@ -143,7 +146,7 @@
             font-size: 16px;
         }
 
-        /* 커서 공들이 들어갈 공간 */
+        /* 커서 공들이 들어가는 공간 */
         #cursor-trail {
             position: relative;
             z-index: 9999;
@@ -179,7 +182,8 @@
             #statement-page,
             #cv-page,
             #dolbom-page,
-            #innerplace-page {
+            #innerplace-page,
+            #bapsang-page {
                 padding: 20px;
             }
 
@@ -220,17 +224,17 @@
 
         <div class="page-content">
             <div class="work-list">
+
                 <a href="#">Everything is life 2023</a>
 
-                <!-- Inner place 작품 페이지로 이동 -->
                 <a href="#innerplace-page">Inner place 2024</a>
 
                 <a href="#">Inner place (un - labeled) 2024</a>
 
-                <!-- 돌 봄 작품 페이지로 이동 -->
                 <a href="#dolbom-page">돌 봄 2025</a>
 
-                <a href="#">이렇게 밥상에 모였다. 2026</a>
+                <a href="#bapsang-page">이렇게 밥상에 모였다. 2026</a>
+
             </div>
         </div>
     </section>
@@ -254,7 +258,6 @@
 
             </div>
 
-            <!-- 사진 맨 아래 뒤로가기 -->
             <a class="gallery-back" href="#work-page">←</a>
         </div>
     </section>
@@ -268,7 +271,6 @@
         <div class="page-content">
             <div class="work-gallery">
 
-                <!-- 1번과 2번 사진 순서 교체 -->
                 <img src="DSC01305.JPG" alt="돌 봄 2025 작품 사진 1">
 
                 <img src="DSC01300.JPG" alt="돌 봄 2025 작품 사진 2">
@@ -287,7 +289,33 @@
 
             </div>
 
-            <!-- 사진 맨 아래 뒤로가기 -->
+            <a class="gallery-back" href="#work-page">←</a>
+        </div>
+    </section>
+
+    <!-- 이렇게 밥상에 모였다. 작품 페이지 -->
+    <section id="bapsang-page">
+        <div class="site-name">Parkseoyeon</div>
+
+        <div class="page-title">이렇게 밥상에 모였다. 2026</div>
+
+        <div class="page-content">
+            <div class="work-gallery">
+
+                <img src="DSC02107.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 1">
+
+                <img src="DSC02125.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 2">
+
+                <img src="DSC02159.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 3">
+
+                <img src="DSC02164.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 4">
+
+                <img src="DSC02173.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 5">
+
+                <img src="DSC02205.JPG" alt="이렇게 밥상에 모였다. 2026 작품 사진 6">
+
+            </div>
+
             <a class="gallery-back" href="#work-page">←</a>
         </div>
     </section>
