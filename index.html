@@ -44,27 +44,28 @@
         }
 
         /* 내부 페이지 기본 숨김 */
-      #work-page,
-#statement-page,
-#cv-page,
-#dolbom-page {
+        #work-page,
+        #statement-page,
+        #cv-page,
+        #dolbom-page {
             display: none;
             min-height: 100vh;
             padding: 24px;
         }
 
         /* 주소 뒤에 해당 해시가 붙었을 때 표시 */
-#work-page:target,
-#statement-page:target,
-#cv-page:target,
-#dolbom-page:target {
+        #work-page:target,
+        #statement-page:target,
+        #cv-page:target,
+        #dolbom-page:target {
             display: block;
         }
 
         /* 내부 페이지가 열리면 메인 화면 숨김 */
         #work-page:target ~ #home-page,
         #statement-page:target ~ #home-page,
-        #cv-page:target ~ #home-page {
+        #cv-page:target ~ #home-page,
+        #dolbom-page:target ~ #home-page {
             display: none;
         }
 
@@ -100,9 +101,6 @@
 
         /* 내부 페이지 내용 */
         .back {
-            position: absolute;
-            top: 52px;
-            left: 24px;
             font-size: 16px;
         }
 
@@ -117,6 +115,27 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+
+        /* 돌 봄 작품 사진 세로 배치 */
+        .work-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .work-gallery img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* 사진 아래 뒤로가기 */
+        .gallery-back {
+            display: block;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 16px;
         }
 
         /* 커서 공들이 들어가는 공간 */
@@ -147,23 +166,14 @@
                 display: block;
             }
         }
-.work-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
 
-.work-gallery img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
         /* 모바일 화면 */
         @media (max-width: 600px) {
             #home-page,
             #work-page,
             #statement-page,
-            #cv-page {
+            #cv-page,
+            #dolbom-page {
                 padding: 20px;
             }
 
@@ -182,11 +192,6 @@
                 left: 20px;
             }
 
-            .back {
-                top: 48px;
-                left: 20px;
-            }
-
             .page-content {
                 padding-top: 120px;
             }
@@ -199,7 +204,7 @@
     <!-- 커서 공들이 들어갈 공간 -->
     <div id="cursor-trail"></div>
 
-    <!-- 작품 페이지 -->
+    <!-- 작품 목록 페이지 -->
     <section id="work-page">
         <div class="site-name">Parkseoyeon</div>
 
@@ -217,27 +222,40 @@
             </div>
         </div>
     </section>
-<!-- 돌 봄 작품 페이지 -->
-<section id="dolbom-page">
-    <div class="site-name">Parkseoyeon</div>
 
-    <a class="back" href="#work-page">←</a>
+    <!-- 돌 봄 작품 페이지 -->
+    <section id="dolbom-page">
+        <div class="site-name">Parkseoyeon</div>
 
-    <div class="page-title">돌 봄 2025</div>
+        <div class="page-title">돌 봄 2025</div>
 
-    <div class="page-content">
-        <div class="work-gallery">
-            <img src="DSC01300.JPG" alt="돌 봄 2025">
-            <img src="DSC01305.JPG" alt="돌 봄 2025">
-            <img src="DSC01312.JPG" alt="돌 봄 2025">
-            <img src="DSC01313.JPG" alt="돌 봄 2025">
-            <img src="DSC01432.JPG" alt="돌 봄 2025">
-            <img src="DSC01437.JPG" alt="돌 봄 2025">
-            <img src="DSC01438.JPG" alt="돌 봄 2025">
-            <img src="DSC01440.JPG" alt="돌 봄 2025">
+        <div class="page-content">
+            <div class="work-gallery">
+
+                <!-- 1번과 2번 사진 순서 교체 -->
+                <img src="DSC01305.JPG" alt="돌 봄 2025 작품 사진 1">
+
+                <img src="DSC01300.JPG" alt="돌 봄 2025 작품 사진 2">
+
+                <img src="DSC01312.JPG" alt="돌 봄 2025 작품 사진 3">
+
+                <img src="DSC01313.JPG" alt="돌 봄 2025 작품 사진 4">
+
+                <img src="DSC01432.JPG" alt="돌 봄 2025 작품 사진 5">
+
+                <img src="DSC01437.JPG" alt="돌 봄 2025 작품 사진 6">
+
+                <img src="DSC01438.JPG" alt="돌 봄 2025 작품 사진 7">
+
+                <img src="DSC01440.JPG" alt="돌 봄 2025 작품 사진 8">
+
+            </div>
+
+            <!-- 사진 맨 아래 뒤로가기 -->
+            <a class="gallery-back" href="#work-page">←</a>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- Artist statement 페이지 -->
     <section id="statement-page">
         <div class="site-name">Parkseoyeon</div>
@@ -352,17 +370,11 @@
                 }
             });
 
-            /*
-             * 마우스를 멈추면 바로 사라지지 않고,
-             * 모든 공이 충분히 따라올 때까지 기다림
-             */
             clearTimeout(moveTimer);
 
             moveTimer = setTimeout(function() {
                 isMoving = false;
-
                 waitUntilBallsArrive();
-
             }, 180);
         });
 
@@ -401,10 +413,6 @@
                 ball.element.style.left = ball.x + "px";
                 ball.element.style.top = ball.y + "px";
 
-                /*
-                 * 뒤따라오는 공들만 색상 변경
-                 * 첫 번째 흰색 공은 계속 흰색 유지
-                 */
                 if (index !== 0 && isMoving && Math.random() < 0.08) {
                     ball.colorIndex =
                         Math.floor(Math.random() * colors.length);
@@ -413,7 +421,6 @@
                         colors[ball.colorIndex];
                 }
 
-                /* 다음 공은 현재 공을 따라감 */
                 targetX = ball.x;
                 targetY = ball.y;
             });
